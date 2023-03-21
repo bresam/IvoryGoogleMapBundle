@@ -23,7 +23,7 @@ class RegisterControlRendererPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $controlManagerRenderer = $container->getDefinition('ivory.google_map.helper.renderer.control.manager');
 

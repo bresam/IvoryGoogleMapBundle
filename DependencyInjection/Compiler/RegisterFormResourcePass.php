@@ -22,7 +22,7 @@ class RegisterFormResourcePass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if ($container->hasParameter($parameter = 'templating.helper.form.resources')) {
             $container->setParameter(

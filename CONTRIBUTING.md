@@ -39,7 +39,7 @@ order to set up the project.
 
 When you're on the new branch with the dependencies, code as much as you want and when the fix is ready, don't commit
 it immediately. Before, you will need to add tests and update the doc. For the tests, everything is tested with
-[PHPUnit](http://phpunit.de/) and the doc is in the markdown format under the `Resources/doc` directory.
+[PHPUnit](https://phpunit.de/) and the doc is in the markdown format under the `Resources/doc` directory.
 
 Then, when you have fixed the bug, tested it and documented it, you can commit and push it with the following commands:
 

@@ -16,6 +16,7 @@ use Ivory\GoogleMap\Place\Autocomplete;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
 use Ivory\GoogleMapBundle\Form\Type\PlaceAutocompleteType;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -35,14 +36,14 @@ class PlaceAutocompleteTypeTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = Forms::createFormFactoryBuilder()
             ->addType(new PlaceAutocompleteType())
             ->getFormFactory();
     }
 
-    public function testDefault()
+    public function testDefault(): void
     {
         $form = $this->createForm();
         $view = $form->createView();
@@ -129,10 +130,8 @@ class PlaceAutocompleteTypeTest extends TestCase
     /**
      * @param mixed   $data
      * @param mixed[] $options
-     *
-     * @return FormInterface
      */
-    private function createForm($data = null, array $options = [])
+    private function createForm($data = null, array $options = []): FormInterface
     {
         return $this->factory->create(
             method_exists(AbstractType::class, 'getBlockPrefix') ? PlaceAutocompleteType::class : 'place_autocomplete',
@@ -142,7 +141,7 @@ class PlaceAutocompleteTypeTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
