@@ -29,7 +29,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     /**
      * {@inheritdoc}
      */
-    protected function loadInternal(array $config, ContainerBuilder $container)
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -48,15 +48,15 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
             $loader->load($resource.'.xml');
         }
 
-        $this->loadMapConfig($config['map'], $container);
-        $this->loadStaticMapConfig($config['static_map'], $container);
-        $this->loadServicesConfig($config, $container, $loader);
+        $this->loadMapConfig($mergedConfig['map'], $container);
+        $this->loadStaticMapConfig($mergedConfig['static_map'], $container);
+        $this->loadServicesConfig($mergedConfig, $container, $loader);
     }
 
     /**
      * @param mixed[] $config
      */
-    private function loadMapConfig(array $config, ContainerBuilder $container)
+    private function loadMapConfig(array $config, ContainerBuilder $container): void
     {
         $container
             ->getDefinition('ivory.google_map.helper.renderer.loader')
@@ -78,7 +78,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     /**
      * @param mixed[] $config
      */
-    private function loadStaticMapConfig(array $config, ContainerBuilder $container)
+    private function loadStaticMapConfig(array $config, ContainerBuilder $container): void
     {
         if (isset($config['api_key'])) {
             $container
@@ -100,7 +100,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     /**
      * @param mixed[] $config
      */
-    private function loadServicesConfig(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    private function loadServicesConfig(array $config, ContainerBuilder $container, LoaderInterface $loader): void
     {
         $services = [
             'direction'          => true,
@@ -152,7 +152,8 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
         ContainerBuilder $container,
         LoaderInterface $loader,
         $http = true
-    ) {
+    ): void
+    {
         $loader->load('service/'.$service.'.xml');
         $definition = $container->getDefinition($serviceName = 'ivory.google_map.'.$service);
 

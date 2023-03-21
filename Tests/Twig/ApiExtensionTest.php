@@ -13,6 +13,7 @@ namespace Ivory\GoogleMapBundle\Tests\Twig;
 
 use Ivory\GoogleMap\Helper\ApiHelper;
 use Ivory\GoogleMapBundle\Twig\ApiExtension;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -20,7 +21,7 @@ use Ivory\GoogleMapBundle\Twig\ApiExtension;
 class ApiExtensionTest extends AbstractExtensionTest
 {
     /**
-     * @var ApiHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var ApiHelper|MockObject
      */
     private $apiHelper;
 
@@ -48,7 +49,7 @@ class ApiExtensionTest extends AbstractExtensionTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ApiHelper
+     * @return MockObject|ApiHelper
      */
     private function createApiHelperMock()
     {

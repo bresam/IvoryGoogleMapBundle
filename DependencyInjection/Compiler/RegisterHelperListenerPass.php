@@ -11,11 +11,8 @@
 
 namespace Ivory\GoogleMapBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
@@ -38,9 +35,6 @@ class RegisterHelperListenerPass implements CompilerPassInterface
      */
     private $passes = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         foreach (self::$helpers as $helper) {
@@ -55,17 +49,8 @@ class RegisterHelperListenerPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
-        if (!class_exists(ServiceClosureArgument::class)) {
-            foreach (self::$helpers as $helper) {
-                $container
-                    ->getDefinition('ivory.google_map.helper.'.$helper.'.event_dispatcher')
-                    ->setClass(ContainerAwareEventDispatcher::class)
-                    ->addArgument(new Reference('service_container'));
-            }
-        }
-
         foreach ($this->passes as $pass) {
             $pass->process($container);
         }

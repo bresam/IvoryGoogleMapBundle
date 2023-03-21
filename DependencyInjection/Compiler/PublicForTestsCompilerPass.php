@@ -9,18 +9,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class PublicForTestsCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$this->isPHPUnit()) {
             return;
         }
 
         foreach ($container->getDefinitions() as $definition) {
-            $definition->setPublic(true);
-        }
 
-        foreach ($container->getAliases() as $definition) {
-            $definition->setPublic(true);
+            if(str_contains($definition->getClass(), 'Ivory\GoogleMapBundle') ||
+               str_contains($definition->getClass(), 'Ivory\GoogleMap')  ||
+               str_contains($definition->getClass(), 'Ivory\Serializer'))
+            {
+             $definition->setPublic(true);
+            }
         }
     }
 

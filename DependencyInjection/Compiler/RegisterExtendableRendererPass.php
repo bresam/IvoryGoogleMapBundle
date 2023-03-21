@@ -23,7 +23,7 @@ class RegisterExtendableRendererPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $tag = 'ivory.google_map.helper.renderer.extendable';
         $extendableRenderer = $container->getDefinition('ivory.google_map.helper.renderer.overlay.extendable');

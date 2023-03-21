@@ -13,6 +13,7 @@ namespace Ivory\GoogleMapBundle\Tests\Templating;
 
 use Ivory\GoogleMap\Helper\ApiHelper as BaseApiHelper;
 use Ivory\GoogleMapBundle\Templating\ApiHelper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,20 +27,20 @@ class ApiHelperTest extends TestCase
     private $apiHelper;
 
     /**
-     * @var BaseApiHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var BaseApiHelper|MockObject
      */
     private $innerApiHelper;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->innerApiHelper = $this->createApiHelperMock();
         $this->apiHelper = new ApiHelper($this->innerApiHelper);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $this->innerApiHelper
             ->expects($this->once())
@@ -56,7 +57,7 @@ class ApiHelperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BaseApiHelper
+     * @return MockObject|BaseApiHelper
      */
     private function createApiHelperMock()
     {

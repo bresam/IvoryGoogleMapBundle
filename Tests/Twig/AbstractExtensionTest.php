@@ -29,7 +29,7 @@ abstract class AbstractExtensionTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->twig = new Environment(new FilesystemLoader([]));
         $this->twig->addExtension($this->createExtension());
@@ -40,10 +40,7 @@ abstract class AbstractExtensionTest extends TestCase
      */
     abstract protected function createExtension();
 
-    /**
-     * @return Environment
-     */
-    protected function getTwig()
+    protected function getTwig(): Environment
     {
         return $this->twig;
     }

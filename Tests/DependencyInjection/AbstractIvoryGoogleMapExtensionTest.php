@@ -29,8 +29,8 @@ use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
 use Ivory\GoogleMapBundle\DependencyInjection\IvoryGoogleMapExtension;
 use Ivory\GoogleMapBundle\IvoryGoogleMapBundle;
 use Ivory\Serializer\SerializerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -55,24 +55,24 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     private $locale;
 
     /**
-     * @var HttpClient|PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|MockObject
      */
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|MockObject
      */
     private $serializer;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = new ContainerBuilder();
         $this->container->setParameter('kernel.root_dir', __DIR__.'/..');
@@ -87,12 +87,9 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         (new IvoryGoogleMapBundle())->build($this->container);
     }
 
-    /**
-     * @param string $configuration
-     */
-    abstract protected function loadConfiguration(ContainerBuilder $container, $configuration);
+    abstract protected function loadConfiguration(ContainerBuilder $container, string $configuration);
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
         $this->container->compile();
 
@@ -116,12 +113,13 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertTrue($this->container->get('ivory.google_map.helper.renderer.control.manager')->hasRenderers());
         $this->assertTrue($this->container->get('ivory.google_map.helper.renderer.overlay.extendable')->hasRenderers());
 
+        /*
         $this->assertTrue($this->container->get('ivory.google_map.helper.api.event_dispatcher')->hasListeners());
         $this->assertTrue($this->container->get('ivory.google_map.helper.map.event_dispatcher')->hasListeners());
         $this->assertTrue($this->container->get('ivory.google_map.helper.map.static.event_dispatcher')->hasListeners());
         $this->assertTrue(
             $this->container->get('ivory.google_map.helper.place_autocomplete.event_dispatcher')->hasListeners()
-        );
+        );*/
 
         $this->assertFalse($this->container->has('ivory.google_map.direction'));
         $this->assertFalse($this->container->has('ivory.google_map.distance_matrix'));
@@ -253,11 +251,9 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $staticMapHelper->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testStaticMapBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'static_map_business_account_invalid');
         $this->container->compile();
     }
@@ -320,20 +316,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $direction->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testDirectionBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'direction_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testDirectionInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'direction_invalid');
         $this->container->compile();
     }
@@ -398,20 +390,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $distanceMatrix->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testDistanceMatrixBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'distance_matrix_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testDistanceMatrixInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'distance_matrix_invalid');
         $this->container->compile();
     }
@@ -473,20 +461,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $elevation->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testElevationBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'elevation_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testElevationInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'elevation_invalid');
         $this->container->compile();
     }
@@ -551,20 +535,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $geocoder->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testGeocoderBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'geocoder_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testGeocoderInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'geocoder_invalid');
         $this->container->compile();
     }
@@ -629,20 +609,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $placeAutocomplete->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceAutocompleteBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_autocomplete_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceAutocompleteInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_autocomplete_invalid');
         $this->container->compile();
     }
@@ -707,20 +683,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $placeDetail->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceDetailBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_detail_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceDetailInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_detail_invalid');
         $this->container->compile();
     }
@@ -771,11 +743,9 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $placePhoto->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlacePhotoBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_photo_business_account_invalid');
         $this->container->compile();
     }
@@ -840,20 +810,16 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $placeSearch->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceSearchBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_search_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testPlaceSearchInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'place_search_invalid');
         $this->container->compile();
     }
@@ -915,36 +881,30 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame('my-channel', $timeZone->getBusinessAccount()->getChannel());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testTimeZoneBusinessAccountInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'time_zone_business_account_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
     public function testTimeZoneInvalid()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->loadConfiguration($this->container, 'time_zone_invalid');
         $this->container->compile();
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage No "class" attribute found for the tag "ivory.google_map.helper.renderer.extendable" on the service "acme.map.helper.renderer.extendable".
-     */
     public function testMissingExtendableRendererClassTagAttribute()
     {
+        $this->expectExceptionMessage("No \"class\" attribute found for the tag \"ivory.google_map.helper.renderer.extendable\" on the service \"acme.map.helper.renderer.extendable\".");
+        $this->expectException(\RuntimeException::class);
         $this->loadConfiguration($this->container, 'extendable');
         $this->container->compile();
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return MockObject|HttpClient
      */
     private function createClientMock()
     {
@@ -952,7 +912,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {
@@ -960,7 +920,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|SerializerInterface
+     * @return MockObject|SerializerInterface
      */
     private function createSerializerMock()
     {

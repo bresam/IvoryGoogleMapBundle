@@ -14,6 +14,7 @@ namespace Ivory\GoogleMapBundle\Tests\Templating;
 use Ivory\GoogleMap\Helper\PlaceAutocompleteHelper as BasePlaceAutocompleteHelper;
 use Ivory\GoogleMap\Place\Autocomplete;
 use Ivory\GoogleMapBundle\Templating\PlaceAutocompleteHelper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,14 +28,14 @@ class PlaceAutocompleteHelperTest extends TestCase
     private $placeAutocompleteHelper;
 
     /**
-     * @var BasePlaceAutocompleteHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var BasePlaceAutocompleteHelper|MockObject
      */
     private $innerPlaceAutocompleteHelper;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->innerPlaceAutocompleteHelper = $this->createPlaceAutocompleteHelperMock();
         $this->placeAutocompleteHelper = new PlaceAutocompleteHelper($this->innerPlaceAutocompleteHelper);
@@ -79,7 +80,7 @@ class PlaceAutocompleteHelperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BasePlaceAutocompleteHelper
+     * @return MockObject|BasePlaceAutocompleteHelper
      */
     private function createPlaceAutocompleteHelperMock()
     {
@@ -87,7 +88,7 @@ class PlaceAutocompleteHelperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Autocomplete
+     * @return MockObject|Autocomplete
      */
     private function createAutocompleteMock()
     {
