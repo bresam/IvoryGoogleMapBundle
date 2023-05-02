@@ -28,11 +28,11 @@ use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
 use Ivory\GoogleMapBundle\DependencyInjection\IvoryGoogleMapExtension;
 use Ivory\GoogleMapBundle\IvoryGoogleMapBundle;
-use Ivory\Serializer\SerializerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -279,7 +279,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->loadConfiguration($this->container, 'direction_format');
         $this->container->compile();
 
-        $this->assertSame(DirectionService::FORMAT_XML, $this->container->get('ivory.google_map.direction')->getFormat());
+        $this->assertSame(DirectionService::FORMAT_JSON, $this->container->get('ivory.google_map.direction')->getFormat());
     }
 
     public function testDirectionApiKey()
@@ -351,7 +351,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
 
         $this->assertSame(
-            DistanceMatrixService::FORMAT_XML,
+            DistanceMatrixService::FORMAT_JSON,
             $this->container->get('ivory.google_map.distance_matrix')->getFormat()
         );
     }
@@ -424,7 +424,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->loadConfiguration($this->container, 'elevation_format');
         $this->container->compile();
 
-        $this->assertSame(ElevationService::FORMAT_XML, $this->container->get('ivory.google_map.elevation')->getFormat());
+        $this->assertSame(ElevationService::FORMAT_JSON, $this->container->get('ivory.google_map.elevation')->getFormat());
     }
 
     public function testElevationApiKey()
@@ -496,7 +496,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
 
         $this->assertSame(
-            GeocoderService::FORMAT_XML,
+            GeocoderService::FORMAT_JSON,
             $this->container->get('ivory.google_map.geocoder')->getFormat()
         );
     }
@@ -570,7 +570,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
 
         $this->assertSame(
-            PlaceAutocompleteService::FORMAT_XML,
+            PlaceAutocompleteService::FORMAT_JSON,
             $this->container->get('ivory.google_map.place_autocomplete')->getFormat()
         );
     }
@@ -644,7 +644,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
 
         $this->assertSame(
-            PlaceDetailService::FORMAT_XML,
+            PlaceDetailService::FORMAT_JSON,
             $this->container->get('ivory.google_map.place_detail')->getFormat()
         );
     }
@@ -771,7 +771,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
 
         $this->assertSame(
-            PlaceSearchService::FORMAT_XML,
+            PlaceSearchService::FORMAT_JSON,
             $this->container->get('ivory.google_map.place_search')->getFormat()
         );
     }
@@ -844,7 +844,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->loadConfiguration($this->container, 'time_zone_format');
         $this->container->compile();
 
-        $this->assertSame(TimeZoneService::FORMAT_XML, $this->container->get('ivory.google_map.time_zone')->getFormat());
+        $this->assertSame(TimeZoneService::FORMAT_JSON, $this->container->get('ivory.google_map.time_zone')->getFormat());
     }
 
     public function testTimeZoneApiKey()
