@@ -1,5 +1,5 @@
 {
-    "name": "ivory/google-map-bundle",
+    "name": "outofboxlab/google-map-bundle",
     "type": "symfony-bundle",
     "description": "Provides a google map integration for Symfony",
     "keywords": [ "google", "map" ],
