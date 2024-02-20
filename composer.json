@@ -18,8 +18,8 @@
     ],
     "require": {
         "php": "^8.0",
-        "symfony/framework-bundle": "^6.0",
-        "ivory/google-map": "v6.x-dev"
+        "symfony/framework-bundle": "^6.0 || ^7.0",
+        "ivory/google-map": "^6.0."
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -28,11 +28,11 @@
         "php-http/guzzle6-adapter": "^2.0",
         "phpunit/phpunit": "^9.6",
         "phpunit/phpunit-selenium": "^9.0",
-        "symfony/cache": "^6.0",
-        "symfony/form": "^6.0",
-        "symfony/phpunit-bridge": "^6.0",
-        "symfony/templating": "^6.0",
-        "symfony/yaml": "^6.0",
+        "symfony/cache": "^6.0 || ^7.0",
+        "symfony/form": "^6.0 || ^7.0",
+        "symfony/phpunit-bridge": "^6.0 || ^7.0",
+        "symfony/templating": "^6.0 || ^7.0",
+        "symfony/yaml": "^6.0 || ^7.0",
         "twig/twig": "^3.5"
     },
     "autoload": {
