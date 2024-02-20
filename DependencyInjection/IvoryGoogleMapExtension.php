@@ -31,7 +31,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $resources = [
             'form',
@@ -45,7 +45,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
         ];
 
         foreach ($resources as $resource) {
-            $loader->load($resource.'.xml');
+            $loader->load($resource . '.xml');
         }
 
         $this->loadMapConfig($mergedConfig['map'], $container);
@@ -103,36 +103,20 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     private function loadServicesConfig(array $config, ContainerBuilder $container, LoaderInterface $loader): void
     {
         $services = [
-            'direction'          => true,
-            'distance_matrix'    => true,
-            'elevation'          => true,
-            'geocoder'           => true,
+            'direction' => true,
+            'distance_matrix' => true,
+            'elevation' => true,
+            'geocoder' => true,
             'place_autocomplete' => true,
-            'place_detail'       => true,
-            'place_photo'        => false,
-            'place_search'       => true,
-            'time_zone'          => true,
+            'place_detail' => true,
+            'place_photo' => false,
+            'place_search' => true,
+            'time_zone' => true,
         ];
-
-        $serializerLoaded = false;
-        $loadSerializer = function() use ($container, $loader) {
-            $loader->load('service/serializer.xml');
-
-            if ($container->hasParameter('kernel.project_dir')) {
-                $container
-                    ->getDefinition('ivory.google_map.serializer.loader')
-                    ->replaceArgument(0, '%kernel.project_dir%/vendor/ivory/google-map/src/Service/Serializer');
-            }
-        };
 
         foreach ($services as $service => $http) {
             if (!isset($config[$service])) {
                 continue;
-            }
-
-            if ($http && !$serializerLoaded) {
-                $loadSerializer();
-                $serializerLoaded = true;
             }
 
             $this->loadServiceConfig($service, $config[$service], $container, $loader, $http);
@@ -140,28 +124,28 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     }
 
     /**
-     * @param string  $service
+     * @param string $service
      * @param mixed[] $config
-     * @param bool    $http
+     * @param bool $http
      *
      * @throws Exception
      */
     private function loadServiceConfig(
-        string $service,
-        array $config,
+        string           $service,
+        array            $config,
         ContainerBuilder $container,
-        LoaderInterface $loader,
-        $http = true
+        LoaderInterface  $loader,
+                         $http = true
     ): void
     {
-        $loader->load('service/'.$service.'.xml');
-        $definition = $container->getDefinition($serviceName = 'ivory.google_map.'.$service);
+        $loader->load('service/' . $service . '.xml');
+        $definition = $container->getDefinition($serviceName = 'ivory.google_map.' . $service);
+  
 
         if ($http) {
             $definition
                 ->addArgument(new Reference($config['client']))
-                ->addArgument(new Reference($config['message_factory']))
-                ->addArgument(new Reference('ivory.serializer'));
+                ->addArgument(new Reference($config['message_factory']));
         }
 
         if ($http && isset($config['format'])) {
@@ -176,7 +160,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
             $businessAccountConfig = $config['business_account'];
 
             $container->setDefinition(
-                $businessAccountName = $serviceName.'.business_account',
+                $businessAccountName = $serviceName . '.business_account',
                 new Definition(BusinessAccount::class, [
                     $businessAccountConfig['client_id'],
                     $businessAccountConfig['secret'],
