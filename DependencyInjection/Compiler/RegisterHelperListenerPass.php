@@ -13,16 +13,19 @@ namespace Ivory\GoogleMapBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class RegisterHelperListenerPass implements CompilerPassInterface
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private static $helpers = [
         'api',
         'map',
@@ -30,29 +33,117 @@ class RegisterHelperListenerPass implements CompilerPassInterface
         'place_autocomplete',
     ];
 
-    /**
-     * @var RegisterListenersPass[]
-     */
-    private $passes = [];
-
-    public function __construct()
+    /** {@inheritdoc}*/
+    public function process(ContainerBuilder $container): void
     {
         foreach (self::$helpers as $helper) {
-            $this->passes[] = new RegisterListenersPass(
-                'ivory.google_map.helper.'.$helper.'.event_dispatcher',
-                'ivory.google_map.helper.'.$helper.'.listener',
-                'ivory.google_map.helper.'.$helper.'.subscriber'
-            );
+            if (!$container->hasDefinition('ivory.google_map.helper.'.$helper.'.event_dispatcher')) {
+                return;
+            }
+
+            $definition = $container->findDefinition('ivory.google_map.helper.'.$helper.'.event_dispatcher');
+
+            foreach ($container->findTaggedServiceIds('ivory.google_map.helper.'.$helper.'.listener', true) as $id => $events) {
+                foreach ($events as $event) {
+                    $priority = isset($event['priority']) ? $event['priority'] : 0;
+
+                    if (!isset($event['event'])) {
+                        if ($container->getDefinition($id)->hasTag('ivory.google_map.helper.'.$helper.'.subscriber')) {
+                            continue;
+                        }
+
+                        $event['method'] = $event['method'] ?? '__invoke';
+                        $event['event'] = $this->getEventFromTypeDeclaration($container, $id, $event['method']);
+                    }
+
+                    $event['event'] = $aliases[$event['event']] ?? $event['event'];
+
+                    if (!isset($event['method'])) {
+                        $event['method'] = 'on'.preg_replace_callback([
+                                '/(?<=\b)[a-z]/i',
+                                '/[^a-z0-9]/i',
+                            ], function ($matches) { return strtoupper($matches[0]); }, $event['event']);
+                        $event['method'] = preg_replace('/[^a-z0-9]/i', '', $event['method']);
+
+                        if (null !== ($class = $container->getDefinition($id)->getClass()) && ($r = $container->getReflectionClass($class, false)) && !$r->hasMethod($event['method']) && $r->hasMethod('__invoke')) {
+                            $event['method'] = '__invoke';
+                        }
+                    }
+
+                    $definition->addMethodCall('addListener', [$event['event'], [new ServiceClosureArgument(new Reference($id)), $event['method']], $priority]);
+                }
+            }
+
+            $extractingDispatcher = new ExtractingEventDispatcher();
+
+            foreach ($container->findTaggedServiceIds('ivory.google_map.helper.'.$helper.'.subscriber', true) as $id => $attributes) {
+                $def = $container->getDefinition($id);
+
+                // We must assume that the class value has been correctly filled, even if the service is created by a factory
+                $class = $def->getClass();
+
+                if (!$r = $container->getReflectionClass($class)) {
+                    throw new InvalidArgumentException(sprintf('Class "%s" used for service "%s" cannot be found.', $class, $id));
+                }
+                if (!$r->isSubclassOf(EventSubscriberInterface::class)) {
+                    throw new InvalidArgumentException(sprintf('Service "%s" must implement interface "%s".', $id, EventSubscriberInterface::class));
+                }
+                $class = $r->name;
+
+                ExtractingEventDispatcher::$aliases = [];
+                ExtractingEventDispatcher::$subscriber = $class;
+                $extractingDispatcher->addSubscriber($extractingDispatcher);
+                foreach ($extractingDispatcher->listeners as $args) {
+                    $args[1] = [new ServiceClosureArgument(new Reference($id)), $args[1]];
+                    $definition->addMethodCall('addListener', $args);
+                }
+                $extractingDispatcher->listeners = [];
+                ExtractingEventDispatcher::$aliases = [];
+            }
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container): void
+    private function getEventFromTypeDeclaration(ContainerBuilder $container, string $id, string $method): string
     {
-        foreach ($this->passes as $pass) {
-            $pass->process($container);
+        if (
+            null === ($class = $container->getDefinition($id)->getClass())
+            || !($r = $container->getReflectionClass($class, false))
+            || !$r->hasMethod($method)
+            || 1 > ($m = $r->getMethod($method))->getNumberOfParameters()
+            || !($type = $m->getParameters()[0]->getType()) instanceof \ReflectionNamedType
+            || $type->isBuiltin()
+            || Event::class === ($name = $type->getName())
+        ) {
+            throw new InvalidArgumentException(sprintf('Service "%s" must define the "event" attribute on "%s" tags.', $id, 'ivory.google_map.helper.???.listener'));
         }
+
+        return $name;
+    }
+}
+
+/**
+ * @internal
+ */
+class ExtractingEventDispatcher extends EventDispatcher implements EventSubscriberInterface
+{
+    public $listeners = [];
+
+    public static $aliases = [];
+    public static $subscriber;
+
+    public function addListener(string $eventName, $listener, int $priority = 0)
+    {
+        $this->listeners[] = [$eventName, $listener[1], $priority];
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        $events = [];
+
+        foreach ([self::$subscriber, 'getSubscribedEvents']() as $eventName => $params) {
+            $events[self::$aliases[$eventName] ?? $eventName] = $params;
+        }
+
+        return $events;
     }
 }
