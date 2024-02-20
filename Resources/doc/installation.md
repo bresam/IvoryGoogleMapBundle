@@ -35,11 +35,11 @@ let's install them to ease our life:
 
 ``` bash
 $ composer require egeloen/serializer-bundle
-$ composer require php-http/guzzle6-adapter
+$ composer require php-http/guzzle7-adapter
 $ composer require php-http/httplug-bundle
 ```
 
-Here, I have chosen to use [Guzzle6](https://docs.guzzlephp.org/en/latest/psr7.html) but since Httplug supports the 
+Here, I have chosen to use [Guzzle7](https://docs.guzzlephp.org/en/latest/psr7.html) but since Httplug supports the 
 most popular http clients, you can install your preferred one instead.
 
 ## Register the bundle

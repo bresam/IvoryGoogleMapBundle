@@ -18,22 +18,21 @@
     ],
     "require": {
         "php": "^8.0",
-        "symfony/framework-bundle": "^6.0 || ^7.0",
-        "ivory/google-map": "^6.0."
+        "symfony/framework-bundle": "^6.4 || ^7.0",
+        "ivory/google-map": "v6.x-dev"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "php-http/cache-plugin": "^1.7.5",
-        "php-http/guzzle6-adapter": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.49",
+        "php-http/cache-plugin": "^2.0",
+        "php-http/guzzle7-adapter": "^1.0",
         "phpunit/phpunit": "^9.6",
         "phpunit/phpunit-selenium": "^9.0",
-        "symfony/cache": "^6.0 || ^7.0",
-        "symfony/form": "^6.0 || ^7.0",
-        "symfony/phpunit-bridge": "^6.0 || ^7.0",
-        "symfony/templating": "^6.0 || ^7.0",
-        "symfony/yaml": "^6.0 || ^7.0",
-        "twig/twig": "^3.5"
+        "symfony/cache": "^6.4 || ^7.0",
+        "symfony/form": "^6.4 || ^7.0",
+        "symfony/phpunit-bridge": "^6.4 || ^7.0",
+        "symfony/templating": "^6.4",
+        "symfony/yaml": "^6.4 || ^7.0",
+        "twig/twig": "^3.8"
     },
     "autoload": {
         "psr-4": { "Ivory\\GoogleMapBundle\\": "" }
