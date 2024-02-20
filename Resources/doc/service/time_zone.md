@@ -25,11 +25,11 @@ First, configure the [Httplug](http://httplug.io/) bundle.
 ``` yaml
 httplug:
     classes:
-        client: Http\Adapter\Guzzle6\Client
+        client: Http\Adapter\Guzzle7\Client
         message_factory: Http\Message\MessageFactory\GuzzleMessageFactory
     clients:
         acme:
-            factory: httplug.factory.guzzle6
+            factory: httplug.factory.guzzle7
 ```
 
 Then, configure the Google Map bundle:

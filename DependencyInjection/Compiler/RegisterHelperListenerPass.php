@@ -33,7 +33,9 @@ class RegisterHelperListenerPass implements CompilerPassInterface
         'place_autocomplete',
     ];
 
-    /** {@inheritdoc}*/
+    /** {@inheritdoc}
+     * @throws \ReflectionException
+     */
     public function process(ContainerBuilder $container): void
     {
         foreach (self::$helpers as $helper) {
@@ -103,6 +105,9 @@ class RegisterHelperListenerPass implements CompilerPassInterface
         }
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function getEventFromTypeDeclaration(ContainerBuilder $container, string $id, string $method): string
     {
         if (
@@ -131,7 +136,7 @@ class ExtractingEventDispatcher extends EventDispatcher implements EventSubscrib
     public static $aliases = [];
     public static $subscriber;
 
-    public function addListener(string $eventName, $listener, int $priority = 0)
+    public function addListener(string $eventName, $listener, int $priority = 0): void
     {
         $this->listeners[] = [$eventName, $listener[1], $priority];
     }
