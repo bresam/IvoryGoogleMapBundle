@@ -136,17 +136,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertFalse($this->container->has('ivory.google_map.twig.extension.place_autocomplete'));
     }
 
-    public function testTemplatingHelpers()
-    {
-        $this->container->setDefinition('templating.engine.php', new Definition(\stdClass::class));
-        $this->container->compile();
-
-        $this->assertTrue($this->container->has('ivory.google_map.templating.api'));
-        $this->assertTrue($this->container->has('ivory.google_map.templating.map'));
-        $this->assertTrue($this->container->has('ivory.google_map.templating.map.static'));
-        $this->assertTrue($this->container->has('ivory.google_map.templating.place_autocomplete'));
-    }
-
     public function testTwigExtensions()
     {
         $this->container->setDefinition('twig', new Definition(\stdClass::class));

@@ -40,7 +40,6 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
             'helper/renderer',
             'helper/subscriber',
             'helper/utility',
-            'templating',
             'twig',
         ];
 

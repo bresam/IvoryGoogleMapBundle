@@ -70,22 +70,3 @@ The available Twig functions are:
  - `ivory_google_map_css`: Renders the map stylesheet.
 
 **Don't forget to always render the Google API loading after rendering your map.**
-
-### Php
-
-If you're using the PHP templating engine, then, the most easy way to render a map is:
-
-``` php
-<?php echo $view['ivory_google_map']->render($map) ?>
-<?php echo $view['ivory_google_api']->render([$map]) ?>
-```
-
-The available helper methods are:
-
- - `ivory_google_api::render`: Renders the Google API loading.
- - `ivory_google_map::render`: Renders the map container + javascript + stylesheet.
- - `ivory_google_map::renderHtml`: Renders the map container.
- - `ivory_google_map::renderJavascript`: Renders the map javascript.
- - `ivory_google_map::renderStylesheet`: Renders the map stylesheet.
- 
-**Don't forget to always render the Google API loading after rendering your map.**
