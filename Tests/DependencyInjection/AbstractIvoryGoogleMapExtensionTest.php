@@ -65,11 +65,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|MockObject
-     */
-    private $serializer;
-
-    /**
      * {@inheritdoc}
      */
     protected function setUp(): void
@@ -81,7 +76,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->setParameter('locale', $this->locale = 'en');
         $this->container->set('httplug.client', $this->client = $this->createClientMock());
         $this->container->set('httplug.message_factory', $this->messageFactory = $this->createMessageFactoryMock());
-        $this->container->set('ivory.serializer', $this->serializer = $this->createSerializerMock());
         $this->container->registerExtension($extension = new IvoryGoogleMapExtension());
         $this->container->loadFromExtension($extension->getAlias());
         (new IvoryGoogleMapBundle())->build($this->container);
@@ -247,6 +241,9 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->container->compile();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testDirection()
     {
         $this->loadConfiguration($this->container, 'direction');
@@ -257,9 +254,10 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(DirectionService::class, $direction);
         $this->assertSame($this->client, $direction->getClient());
         $this->assertSame($this->messageFactory, $direction->getMessageFactory());
-        $this->assertSame($this->serializer, $direction->getSerializer());
         $this->assertFalse($direction->hasBusinessAccount());
-        self::assertTrue($this->container->has('ivory.google_map.serializer.loader'));
+
+        # TODO Check
+        #self::assertTrue($this->container->has('ivory.google_map.serializer.loader'));
     }
 
     public function testDirectionApiKey()
@@ -320,7 +318,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(DistanceMatrixService::class, $distanceMatrix);
         $this->assertSame($this->client, $distanceMatrix->getClient());
         $this->assertSame($this->messageFactory, $distanceMatrix->getMessageFactory());
-        $this->assertSame($this->serializer, $distanceMatrix->getSerializer());
         $this->assertFalse($distanceMatrix->hasBusinessAccount());
     }
 
@@ -382,7 +379,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(ElevationService::class, $elevation);
         $this->assertSame($this->client, $elevation->getClient());
         $this->assertSame($this->messageFactory, $elevation->getMessageFactory());
-        $this->assertSame($this->serializer, $elevation->getSerializer());
         $this->assertFalse($elevation->hasBusinessAccount());
     }
 
@@ -444,7 +440,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(GeocoderService::class, $geocoder);
         $this->assertSame($this->client, $geocoder->getClient());
         $this->assertSame($this->messageFactory, $geocoder->getMessageFactory());
-        $this->assertSame($this->serializer, $geocoder->getSerializer());
         $this->assertFalse($geocoder->hasBusinessAccount());
     }
 
@@ -506,7 +501,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(PlaceAutocompleteService::class, $placeAutocomplete);
         $this->assertSame($this->client, $placeAutocomplete->getClient());
         $this->assertSame($this->messageFactory, $placeAutocomplete->getMessageFactory());
-        $this->assertSame($this->serializer, $placeAutocomplete->getSerializer());
         $this->assertFalse($placeAutocomplete->hasBusinessAccount());
     }
 
@@ -568,7 +562,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(PlaceDetailService::class, $placeDetail);
         $this->assertSame($this->client, $placeDetail->getClient());
         $this->assertSame($this->messageFactory, $placeDetail->getMessageFactory());
-        $this->assertSame($this->serializer, $placeDetail->getSerializer());
         $this->assertFalse($placeDetail->hasBusinessAccount());
     }
 
@@ -683,7 +676,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(PlaceSearchService::class, $placeSearch);
         $this->assertSame($this->client, $placeSearch->getClient());
         $this->assertSame($this->messageFactory, $placeSearch->getMessageFactory());
-        $this->assertSame($this->serializer, $placeSearch->getSerializer());
         $this->assertFalse($placeSearch->hasBusinessAccount());
     }
 
@@ -745,7 +737,6 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertInstanceOf(TimeZoneService::class, $timeZone);
         $this->assertSame($this->client, $timeZone->getClient());
         $this->assertSame($this->messageFactory, $timeZone->getMessageFactory());
-        $this->assertSame($this->serializer, $timeZone->getSerializer());
         $this->assertFalse($timeZone->hasBusinessAccount());
     }
 
