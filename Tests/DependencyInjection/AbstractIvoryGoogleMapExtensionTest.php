@@ -258,17 +258,8 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $direction->getClient());
         $this->assertSame($this->messageFactory, $direction->getMessageFactory());
         $this->assertSame($this->serializer, $direction->getSerializer());
-        $this->assertSame(DirectionService::FORMAT_JSON, $direction->getFormat());
         $this->assertFalse($direction->hasBusinessAccount());
         self::assertTrue($this->container->has('ivory.google_map.serializer.loader'));
-    }
-
-    public function testDirectionFormat()
-    {
-        $this->loadConfiguration($this->container, 'direction_format');
-        $this->container->compile();
-
-        $this->assertSame(DirectionService::FORMAT_JSON, $this->container->get('ivory.google_map.direction')->getFormat());
     }
 
     public function testDirectionApiKey()
@@ -330,19 +321,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $distanceMatrix->getClient());
         $this->assertSame($this->messageFactory, $distanceMatrix->getMessageFactory());
         $this->assertSame($this->serializer, $distanceMatrix->getSerializer());
-        $this->assertSame(DistanceMatrixService::FORMAT_JSON, $distanceMatrix->getFormat());
         $this->assertFalse($distanceMatrix->hasBusinessAccount());
-    }
-
-    public function testDistanceMatrixFormat()
-    {
-        $this->loadConfiguration($this->container, 'distance_matrix_format');
-        $this->container->compile();
-
-        $this->assertSame(
-            DistanceMatrixService::FORMAT_JSON,
-            $this->container->get('ivory.google_map.distance_matrix')->getFormat()
-        );
     }
 
     public function testDistanceMatrixApiKey()
@@ -404,16 +383,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $elevation->getClient());
         $this->assertSame($this->messageFactory, $elevation->getMessageFactory());
         $this->assertSame($this->serializer, $elevation->getSerializer());
-        $this->assertSame(ElevationService::FORMAT_JSON, $elevation->getFormat());
         $this->assertFalse($elevation->hasBusinessAccount());
-    }
-
-    public function testElevationFormat()
-    {
-        $this->loadConfiguration($this->container, 'elevation_format');
-        $this->container->compile();
-
-        $this->assertSame(ElevationService::FORMAT_JSON, $this->container->get('ivory.google_map.elevation')->getFormat());
     }
 
     public function testElevationApiKey()
@@ -475,19 +445,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $geocoder->getClient());
         $this->assertSame($this->messageFactory, $geocoder->getMessageFactory());
         $this->assertSame($this->serializer, $geocoder->getSerializer());
-        $this->assertSame(GeocoderService::FORMAT_JSON, $geocoder->getFormat());
         $this->assertFalse($geocoder->hasBusinessAccount());
-    }
-
-    public function testGeocoderFormat()
-    {
-        $this->loadConfiguration($this->container, 'geocoder_format');
-        $this->container->compile();
-
-        $this->assertSame(
-            GeocoderService::FORMAT_JSON,
-            $this->container->get('ivory.google_map.geocoder')->getFormat()
-        );
     }
 
     public function testGeocoderApiKey()
@@ -549,19 +507,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $placeAutocomplete->getClient());
         $this->assertSame($this->messageFactory, $placeAutocomplete->getMessageFactory());
         $this->assertSame($this->serializer, $placeAutocomplete->getSerializer());
-        $this->assertSame(PlaceAutocompleteService::FORMAT_JSON, $placeAutocomplete->getFormat());
         $this->assertFalse($placeAutocomplete->hasBusinessAccount());
-    }
-
-    public function testPlaceAutocompleteFormat()
-    {
-        $this->loadConfiguration($this->container, 'place_autocomplete_format');
-        $this->container->compile();
-
-        $this->assertSame(
-            PlaceAutocompleteService::FORMAT_JSON,
-            $this->container->get('ivory.google_map.place_autocomplete')->getFormat()
-        );
     }
 
     public function testPlaceAutocompleteApiKey()
@@ -623,19 +569,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $placeDetail->getClient());
         $this->assertSame($this->messageFactory, $placeDetail->getMessageFactory());
         $this->assertSame($this->serializer, $placeDetail->getSerializer());
-        $this->assertSame(PlaceDetailService::FORMAT_JSON, $placeDetail->getFormat());
         $this->assertFalse($placeDetail->hasBusinessAccount());
-    }
-
-    public function testPlaceDetailFormat()
-    {
-        $this->loadConfiguration($this->container, 'place_detail_format');
-        $this->container->compile();
-
-        $this->assertSame(
-            PlaceDetailService::FORMAT_JSON,
-            $this->container->get('ivory.google_map.place_detail')->getFormat()
-        );
     }
 
     public function testPlaceDetailApiKey()
@@ -750,19 +684,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $placeSearch->getClient());
         $this->assertSame($this->messageFactory, $placeSearch->getMessageFactory());
         $this->assertSame($this->serializer, $placeSearch->getSerializer());
-        $this->assertSame(PlaceSearchService::FORMAT_JSON, $placeSearch->getFormat());
         $this->assertFalse($placeSearch->hasBusinessAccount());
-    }
-
-    public function testPlaceSearchFormat()
-    {
-        $this->loadConfiguration($this->container, 'place_search_format');
-        $this->container->compile();
-
-        $this->assertSame(
-            PlaceSearchService::FORMAT_JSON,
-            $this->container->get('ivory.google_map.place_search')->getFormat()
-        );
     }
 
     public function testPlaceSearchApiKey()
@@ -824,16 +746,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
         $this->assertSame($this->client, $timeZone->getClient());
         $this->assertSame($this->messageFactory, $timeZone->getMessageFactory());
         $this->assertSame($this->serializer, $timeZone->getSerializer());
-        $this->assertSame(TimeZoneService::FORMAT_JSON, $timeZone->getFormat());
         $this->assertFalse($timeZone->hasBusinessAccount());
-    }
-
-    public function testTimeZoneFormat()
-    {
-        $this->loadConfiguration($this->container, 'time_zone_format');
-        $this->container->compile();
-
-        $this->assertSame(TimeZoneService::FORMAT_JSON, $this->container->get('ivory.google_map.time_zone')->getFormat());
     }
 
     public function testTimeZoneApiKey()
