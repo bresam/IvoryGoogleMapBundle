@@ -62,11 +62,3 @@ If you're using Twig, the most easy way to render a map is:
 ``` twig
 <img src="{{ ivory_google_map_static(map) }}" />
 ```
-
-### Php
-
-If you're using the PHP templating engine, then, the most easy way to render a map is:
-
-``` php
-<img src="<?php echo $view['ivory_google_map_static']->render($map) ?>" />
-```

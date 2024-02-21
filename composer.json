@@ -30,7 +30,6 @@
         "symfony/cache": "^6.4 || ^7.0",
         "symfony/form": "^6.4 || ^7.0",
         "symfony/phpunit-bridge": "^6.4 || ^7.0",
-        "symfony/templating": "^6.4",
         "symfony/yaml": "^6.4 || ^7.0",
         "twig/twig": "^3.8"
     },
