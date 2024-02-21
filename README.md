@@ -1,6 +1,6 @@
 # README
 
-
+[![Build](https://github.com/bresam/ivory-google-map-bundle/actions/workflows/build.yml/badge.svg)](https://github.com/bresam/ivory-google-map-bundle/actions/workflows/build.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
 
