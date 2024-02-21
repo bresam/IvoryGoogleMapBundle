@@ -21,18 +21,8 @@ use Twig\TwigFunction;
  */
 class StaticMapExtension extends AbstractExtension
 {
-    /**
-     * @var StaticMapHelper
-     */
-    private $staticMapHelper;
-
-    /**
-     * @param StaticMapHelper $staticMapHelper
-     */
-    public function __construct(StaticMapHelper $staticMapHelper)
-    {
-        $this->staticMapHelper = $staticMapHelper;
-    }
+    public function __construct(private StaticMapHelper $staticMapHelper)
+    {}
 
     /**
      * {@inheritdoc}
@@ -58,6 +48,9 @@ class StaticMapExtension extends AbstractExtension
         return 'ivory_google_map_static';
     }
 
+    /**
+     * @return string[]
+     */
     private function getMapping(): array
     {
         return ['ivory_google_map_static' => 'render'];
