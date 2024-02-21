@@ -1,6 +1,6 @@
 # README
 
-[![Travis Build Status](https://api.travis-ci.com/bresam/ivory-google-map-bundle.svg?branch=master)](https://travis-ci.com/github/bresam/ivory-google-map-bundle)
+
 [![Code Coverage](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
 
@@ -29,7 +29,7 @@ your Symfony project.
 ## Testing
 
 The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
-execute the test suite, check the travis [configuration](/.travis.yml).
+execute the test suite.
 
 ## Contribute
 
