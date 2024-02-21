@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit colors="true" bootstrap="Tests/autoload.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         colors="true"
+         bootstrap="Tests/autoload.php"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+>
     <testsuites>
         <testsuite name="IvoryGoogleMapBundle Test Suite">
-            <directory suffix="Test.php">./Tests</directory>
+            <directory>./Tests</directory>
         </testsuite>
     </testsuites>
+
     <php>
         <server name="BROWSER_NAME" value="chrome" />
         <server name="SELENIUM_HOST" value="selenium-chrome" />
@@ -14,20 +18,23 @@
         <server name="API_KEY" value="" />
         <server name="API_SECRET" value="" />
     </php>
-    <filter>
-        <whitelist>
+
+    <coverage>
+        <include>
             <directory>./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+        </include>
+        <exclude>
+            <directory>./Resources</directory>
+            <directory>./Tests</directory>
+            <directory>./vendor</directory>
+        </exclude>
+    </coverage>
+
     <groups>
         <exclude>
             <!-- Temporarily disabled due to incorrect batch execution errors -->
             <group>functional</group>
         </exclude>
     </groups>
+
 </phpunit>
