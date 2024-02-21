@@ -21,14 +21,8 @@ use Twig\TwigFunction;
  */
 class MapExtension extends AbstractExtension
 {
-    /**
-     * @var MapHelper
-     */
-    private $mapHelper;
+    private MapHelper $mapHelper;
 
-    /**
-     * @param MapHelper $mapHelper
-     */
     public function __construct(MapHelper $mapHelper)
     {
         $this->mapHelper = $mapHelper;
@@ -49,10 +43,7 @@ class MapExtension extends AbstractExtension
     }
 
     /**
-     * @param Map      $map
      * @param string[] $attributes
-     *
-     * @return string
      */
     public function render(Map $map, array $attributes = []): string
     {
@@ -62,10 +53,7 @@ class MapExtension extends AbstractExtension
     }
 
     /**
-     * @param Map      $map
      * @param string[] $attributes
-     *
-     * @return string
      */
     public function renderHtml(Map $map, array $attributes = []): string
     {
@@ -74,29 +62,16 @@ class MapExtension extends AbstractExtension
         return $this->mapHelper->renderHtml($map);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
     public function renderStylesheet(Map $map): string
     {
         return $this->mapHelper->renderStylesheet($map);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
     public function renderJavascript(Map $map): string
     {
         return $this->mapHelper->renderJavascript($map);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ivory_google_map';

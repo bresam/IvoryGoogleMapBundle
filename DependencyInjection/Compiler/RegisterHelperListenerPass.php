@@ -26,7 +26,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class RegisterHelperListenerPass implements CompilerPassInterface
 {
     /** @var string[] */
-    private static $helpers = [
+    private static array $helpers = [
         'api',
         'map',
         'map.static',
@@ -47,7 +47,7 @@ class RegisterHelperListenerPass implements CompilerPassInterface
 
             foreach ($container->findTaggedServiceIds('ivory.google_map.helper.'.$helper.'.listener', true) as $id => $events) {
                 foreach ($events as $event) {
-                    $priority = isset($event['priority']) ? $event['priority'] : 0;
+                    $priority = $event['priority'] ?? 0;
 
                     if (!isset($event['event'])) {
                         if ($container->getDefinition($id)->hasTag('ivory.google_map.helper.'.$helper.'.subscriber')) {
@@ -131,9 +131,9 @@ class RegisterHelperListenerPass implements CompilerPassInterface
  */
 class ExtractingEventDispatcher extends EventDispatcher implements EventSubscriberInterface
 {
-    public $listeners = [];
+    public array $listeners = [];
 
-    public static $aliases = [];
+    public static array $aliases = [];
     public static $subscriber;
 
     public function addListener(string $eventName, callable|array $listener, int $priority = 0): void

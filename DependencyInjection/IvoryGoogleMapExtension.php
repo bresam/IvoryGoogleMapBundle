@@ -124,9 +124,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     }
 
     /**
-     * @param string $service
      * @param mixed[] $config
-     * @param bool $http
      *
      * @throws Exception
      */

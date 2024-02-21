@@ -20,18 +20,8 @@ use Twig\TwigFunction;
  */
 class ApiExtension extends AbstractExtension
 {
-    /**
-     * @var ApiHelper
-     */
-    private $apiHelper;
-
-    /**
-     * @param ApiHelper $apiHelper
-     */
-    public function __construct(ApiHelper $apiHelper)
-    {
-        $this->apiHelper = $apiHelper;
-    }
+    public function __construct(private ApiHelper $apiHelper)
+    {}
 
     /**
      * {@inheritdoc}
@@ -49,17 +39,12 @@ class ApiExtension extends AbstractExtension
 
     /**
      * @param object[] $objects
-     *
-     * @return string
      */
     public function render(array $objects): string
     {
         return $this->apiHelper->render($objects);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ivory_google_api';

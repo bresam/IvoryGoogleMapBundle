@@ -62,10 +62,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createStaticMapNode()
+    private function createStaticMapNode(): ArrayNodeDefinition
     {
         return $this->createNode('static_map')
             ->addDefaultsIfNotSet()
@@ -127,10 +124,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    /**
-     * @return ArrayNodeDefinition|NodeDefinition
-     */
-    private function createNode(string $name = null, string $type = 'array')
+    private function createNode(string $name = null, string $type = 'array'): ArrayNodeDefinition|NodeDefinition
     {
         return $this->createTreeBuilder($name, $type)->getRootNode();
     }
