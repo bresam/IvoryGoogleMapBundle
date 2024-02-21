@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "ivory/google-map": "v6.x-dev"
     },
