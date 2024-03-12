@@ -21,14 +21,8 @@ use Twig\TwigFunction;
  */
 class MapExtension extends AbstractExtension
 {
-    /**
-     * @var MapHelper
-     */
-    private $mapHelper;
+    private MapHelper $mapHelper;
 
-    /**
-     * @param MapHelper $mapHelper
-     */
     public function __construct(MapHelper $mapHelper)
     {
         $this->mapHelper = $mapHelper;
@@ -37,7 +31,7 @@ class MapExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = [];
 
@@ -49,12 +43,9 @@ class MapExtension extends AbstractExtension
     }
 
     /**
-     * @param Map      $map
      * @param string[] $attributes
-     *
-     * @return string
      */
-    public function render(Map $map, array $attributes = [])
+    public function render(Map $map, array $attributes = []): string
     {
         $map->addHtmlAttributes($attributes);
 
@@ -62,42 +53,26 @@ class MapExtension extends AbstractExtension
     }
 
     /**
-     * @param Map      $map
      * @param string[] $attributes
-     *
-     * @return string
      */
-    public function renderHtml(Map $map, array $attributes = [])
+    public function renderHtml(Map $map, array $attributes = []): string
     {
         $map->addHtmlAttributes($attributes);
 
         return $this->mapHelper->renderHtml($map);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function renderStylesheet(Map $map)
+    public function renderStylesheet(Map $map): string
     {
         return $this->mapHelper->renderStylesheet($map);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function renderJavascript(Map $map)
+    public function renderJavascript(Map $map): string
     {
         return $this->mapHelper->renderJavascript($map);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'ivory_google_map';
     }
@@ -105,7 +80,7 @@ class MapExtension extends AbstractExtension
     /**
      * @return string[]
      */
-    private function getMapping()
+    private function getMapping(): array
     {
         return [
             'ivory_google_map'           => 'render',

@@ -22,7 +22,7 @@ class CleanTemplatingPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('templating.engine.php')) {
             $container->removeDefinition('ivory.google_map.templating.api');

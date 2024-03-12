@@ -20,8 +20,8 @@ services:
 
     selenium-chrome:
         image: selenium/standalone-chrome-debug
-        ports:
-            - "5900:5900"
+#        ports:
+#            - "5900:5900"
         volumes:
             - shared-tmp:/tmp/ivory-google-map
 

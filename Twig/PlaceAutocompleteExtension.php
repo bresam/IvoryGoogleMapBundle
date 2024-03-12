@@ -21,23 +21,13 @@ use Twig\TwigFunction;
  */
 class PlaceAutocompleteExtension extends AbstractExtension
 {
-    /**
-     * @var PlaceAutocompleteHelper
-     */
-    private $placeAutocompleteHelper;
-
-    /**
-     * @param PlaceAutocompleteHelper $placeAutocompleteHelper
-     */
-    public function __construct(PlaceAutocompleteHelper $placeAutocompleteHelper)
-    {
-        $this->placeAutocompleteHelper = $placeAutocompleteHelper;
-    }
+    public function __construct(private PlaceAutocompleteHelper $placeAutocompleteHelper)
+    {}
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = [];
 
@@ -49,12 +39,9 @@ class PlaceAutocompleteExtension extends AbstractExtension
     }
 
     /**
-     * @param Autocomplete $autocomplete
      * @param string[]     $attributes
-     *
-     * @return string
      */
-    public function render(Autocomplete $autocomplete, array $attributes = [])
+    public function render(Autocomplete $autocomplete, array $attributes = []): string
     {
         $autocomplete->addInputAttributes($attributes);
 
@@ -62,32 +49,21 @@ class PlaceAutocompleteExtension extends AbstractExtension
     }
 
     /**
-     * @param Autocomplete $autocomplete
      * @param string[]     $attributes
-     *
-     * @return string
      */
-    public function renderHtml(Autocomplete $autocomplete, array $attributes = [])
+    public function renderHtml(Autocomplete $autocomplete, array $attributes = []): string
     {
         $autocomplete->addInputAttributes($attributes);
 
         return $this->placeAutocompleteHelper->renderHtml($autocomplete);
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    public function renderJavascript(Autocomplete $autocomplete)
+    public function renderJavascript(Autocomplete $autocomplete): string
     {
         return $this->placeAutocompleteHelper->renderJavascript($autocomplete);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'ivory_google_place_autocomplete';
     }
@@ -95,7 +71,7 @@ class PlaceAutocompleteExtension extends AbstractExtension
     /**
      * @return string[]
      */
-    private function getMapping()
+    private function getMapping(): array
     {
         return [
             'ivory_google_place_autocomplete'           => 'render',

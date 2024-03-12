@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = $this->createTreeBuilder('ivory_google_map');
         $children = $treeBuilder->getRootNode()
@@ -51,10 +51,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createMapNode()
+    private function createMapNode(): ArrayNodeDefinition
     {
         return $this->createNode('map')
             ->addDefaultsIfNotSet()
@@ -65,10 +62,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createStaticMapNode()
+    private function createStaticMapNode(): ArrayNodeDefinition
     {
         return $this->createNode('static_map')
             ->addDefaultsIfNotSet()
@@ -78,13 +72,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param string $service
-     * @param bool   $http
-     *
-     * @return ArrayNodeDefinition
-     */
-    private function createServiceNode($service, $http)
+    private function createServiceNode(string $service, bool $http): ArrayNodeDefinition
     {
         $node = $this->createNode($service);
         $children = $node
@@ -116,12 +104,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    /**
-     * @param bool $service
-     *
-     * @return ArrayNodeDefinition
-     */
-    private function createBusinessAccountNode($service)
+    private function createBusinessAccountNode(bool $service): ArrayNodeDefinition
     {
         $node = $this->createNode('business_account');
         $clientIdNode = $node->children()
@@ -141,23 +124,12 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    /**
-     * @param string $name
-     * @param string $type
-     *
-     * @return ArrayNodeDefinition|NodeDefinition
-     */
-    private function createNode(string $name = null, string $type = 'array')
+    private function createNode(string $name = null, string $type = 'array'): ArrayNodeDefinition|NodeDefinition
     {
         return $this->createTreeBuilder($name, $type)->getRootNode();
     }
 
-    /**
-     * @param string $name
-     * @param string $type
-     * @return TreeBuilder
-     */
-    private function createTreeBuilder(string $name = null, string $type = 'array')
+    private function createTreeBuilder(string $name = null, string $type = 'array'): TreeBuilder
     {
         return new TreeBuilder($name, $type);
     }
