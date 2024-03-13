@@ -17,9 +17,8 @@ class PublicForTestsCompilerPass implements CompilerPassInterface
 
         foreach ($container->getDefinitions() as $definition) {
 
-            if(str_contains($definition->getClass(), 'Ivory\GoogleMapBundle') ||
-               str_contains($definition->getClass(), 'Ivory\GoogleMap')  ||
-               str_contains($definition->getClass(), 'Ivory\Serializer'))
+            if(str_contains((string) $definition->getClass(), 'Ivory\GoogleMapBundle') ||
+               str_contains((string) $definition->getClass(), 'Ivory\GoogleMap'))
             {
              $definition->setPublic(true);
             }
