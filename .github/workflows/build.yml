@@ -35,7 +35,9 @@ jobs:
                   - php: '8.3'
                     symfony-version: 7.0.*
                     stability: prefer-stable
-
+                  - php: '8.4'
+                    symfony-version: 7.0.*
+                    stability: prefer-stable
 
         env:
             APP_ENV: test
